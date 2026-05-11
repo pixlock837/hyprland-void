@@ -7,17 +7,17 @@ This repository contains template files and binaries for building or installing 
 
 ### Installation
 
-The easiest way to install Hyprland on Void Linux is using the [binary repository](https://github.com/sofijacom/hyprland-void/tree/repository-x86_64-glibc) which is built automatically using [GitHub Actions](https://github.com/sofijacom/hyprland-void/blob/master/.github/workflows/build-latest.yml) whenever a new commit is pushed to this repository.
+The easiest way to install Hyprland on Void Linux is using the [binary repository](https://github.com/pixlock837/hyprland-void/tree/repository-x86_64-glibc) which is built automatically using [GitHub Actions](https://github.com/pixlock837/hyprland-void/blob/master/.github/workflows/build-latest.yml) whenever a new commit is pushed to this repository.
 
 You can add this repository to xbps's repositories by creating a file such as `/etc/xbps.d/hyprland-void.conf` with the following text:
 
 ```
-repository=https://raw.githubusercontent.com/sofijacom/hyprland-void/repository-x86_64-glibc
+repository=https://raw.githubusercontent.com/pixlock837/hyprland-void/repository-x86_64-glibc
 ```
 
 This can be done with the following command:
 ```
-echo repository=https://raw.githubusercontent.com/sofijacom/hyprland-void/repository-x86_64-glibc | sudo tee /etc/xbps.d/hyprland-void.conf
+echo repository=https://raw.githubusercontent.com/pixlock837/hyprland-void/repository-x86_64-glibc | sudo tee /etc/xbps.d/hyprland-void.conf
 ```
 Then you need to refresh your repositories and accept the repository's fingerprint:
 ```
@@ -86,7 +86,7 @@ cd ..
 3) Clone this repository:
 
 ```
-git clone https://github.com/sofijacom/hyprland-void.git
+git clone https://github.com/pixlock837/hyprland-void.git
 cd hyprland-void
 ```
 
