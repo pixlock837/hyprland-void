@@ -58,6 +58,9 @@ makedepends="
   xcb-util-renderutil-devel
   xcb-util-wm-devel
   xorg-server-xwayland
+  glslang-devel
+	SPIRV-Tools-devel
+	lcms2-devel
 "
 short_desc="Dynamic tiling Wayland compositor that doesn't sacrifice on its looks"
 maintainer="Sofiya <sofiya@v.org>"
@@ -74,7 +77,7 @@ if [ "$XBPS_TARGET_LIBC" = "musl" ]; then
 fi
 
 pre_configure() {
-    xxd -i example/hyprland.conf > src/config/example_config_data.h
+    xxd -i example/hyprland.lua > src/config/example_config_data.h
 }
 
 post_install() {
