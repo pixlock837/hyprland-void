@@ -1,7 +1,7 @@
 # Template file for 'hyprland'
 
 pkgname=hyprland
-version=0.54.3
+version=0.55.0
 revision=1
 build_style=cmake
 configure_args+=" --no-warn-unused-cli"
@@ -25,6 +25,7 @@ othermakedepends="
   xxd
   xorgproto
   git
+	clang
 "
 hostmakedepends=$othermakedepends
 makedepends="
@@ -47,16 +48,21 @@ makedepends="
   libxcb-devel
   libXcursor-devel
   libxkbcommon-devel
+  lua54-devel
   muparser-devel
   pango-devel
   re2-devel
-  tomlplusplus
+  tomlplusplus-devel
   wayland-devel
   wayland-protocols
   xcb-util-errors-devel
   xcb-util-renderutil-devel
   xcb-util-wm-devel
   xorg-server-xwayland
+	glslang-devel
+	SPIRV-Tools-devel
+	lcms2-devel
+	hyprland-protocols
 "
 short_desc="Dynamic tiling Wayland compositor that doesn't sacrifice on its looks"
 maintainer="Sofiya <sofiya@v.org>"
@@ -64,7 +70,7 @@ license="BSD-3-Clause"
 homepage="https://hyprland.org/"
 changelog="https://github.com/hyprwm/Hyprland/releases"
 distfiles="https://github.com/hyprwm/Hyprland/releases/download/v${version}/source-v${version}.tar.gz"
-checksum="3c20a191a6f23af75f9a8db636d690c6adc95931447f9d69fb20884ec04c63ee"
+checksum="2be1a0b5579e7bc997d1e0c510a1b94c0bcde95db8ae3f46a01415f479dfcac0"
 
 if [ "$XBPS_TARGET_LIBC" = "musl" ]; then
   configure_args+=" -DCMAKE_CXX_FLAGS=\"-lexecinfo\""
@@ -73,9 +79,21 @@ if [ "$XBPS_TARGET_LIBC" = "musl" ]; then
 fi
 
 pre_configure() {
-	xxd -i example/hyprland.conf > src/config/example_config_data.h
+    xxd -i example/hyprland.lua > src/config/example_config_data.h
+		export CC=clang
+		export CXX=clang++
 }
 
+post_patch() {
+    # Fix string_view concatenation bug in hyprctl
+    vsed -i 's,instanceSignature + "/" + filename,std::string(instanceSignature) + "/" + std::string(filename),' hyprctl/src/main.cpp
+
+    # Fix string_view concatenation bug in ParserUtils
+    vsed -i 's/std::string{"0x"} + value/std::string{"0x"} + std::string(value)/' src/config/shared/parserUtils/ParserUtils.cpp
+
+    # Fix C++23 insert_range compatibility in Monitor
+    vsed -i 's/insert_range(requestedModes.end(), sortedModes | std::views::reverse)/insert(requestedModes.end(), sortedModes.rbegin(), sortedModes.rend())/' src/helpers/Monitor.cpp
+}
 post_install() {
   # license
   vlicense LICENSE
@@ -100,4 +118,3 @@ hyprland-devel_package() {
     vmove usr/share/pkgconfig
   }
 }
-
