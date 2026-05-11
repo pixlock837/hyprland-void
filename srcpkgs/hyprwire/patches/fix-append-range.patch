@@ -147,3 +147,4 @@ diff '--color=auto' -ruN a/src/core/wireObject/IWireObject.cpp b/src/core/wireOb
                          }
                          break;
                      }
+
