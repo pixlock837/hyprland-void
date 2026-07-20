@@ -92,7 +92,7 @@ post_patch() {
     vsed -i 's/std::string{"0x"} + value/std::string{"0x"} + std::string(value)/' src/config/shared/parserUtils/ParserUtils.cpp
 
     # Fix C++23 insert_range compatibility in Monitor
-    vsed -i 's/insert_range(requestedModes.end(), sortedModes | std::views::reverse)/insert(requestedModes.end(), sortedModes.rbegin(), sortedModes.rend())/' src/helpers/Monitor.cpp
+    vsed -i 's/insert_range(requestedModes.end(), sortedModes | std::views::reverse)/insert(requestedModes.end(), sortedModes.rbegin(), sortedModes.rend())/' src/output/Monitor.cpp
 }
 post_install() {
   # license
