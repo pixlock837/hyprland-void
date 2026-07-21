@@ -44,6 +44,7 @@ makedepends="
   libglvnd-devel
   libinput-devel
   libliftoff-devel
+  libei-devel
   libseat-devel
   libxcb-devel
   libXcursor-devel
@@ -63,6 +64,7 @@ makedepends="
 	SPIRV-Tools-devel
 	lcms2-devel
 	hyprland-protocols
+  readline-devel
 "
 short_desc="Dynamic tiling Wayland compositor that doesn't sacrifice on its looks"
 maintainer="pixlock837 <88538673+pixlock837@users.noreply.github.com>"
