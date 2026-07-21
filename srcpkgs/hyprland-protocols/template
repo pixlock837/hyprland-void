@@ -1,7 +1,7 @@
 # Template file for 'hyprland-protocols'
 pkgname=hyprland-protocols
 version=0.7.0
-revision=1
+revision=2
 build_style=meson
 short_desc="Wayland protocol extensions for Hyprland"
 maintainer="pixlock837 <88538673+pixlock837@users.noreply.github.com>"
