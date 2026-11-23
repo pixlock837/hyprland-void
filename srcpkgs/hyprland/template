@@ -54,7 +54,6 @@ makedepends="
   pango-devel
   re2-devel
   tomlplusplus
-  tomlplusplus-devel
   wayland-devel
   wayland-protocols
   xcb-util-errors-devel
@@ -95,6 +94,24 @@ post_patch() {
     vsed -i 's/insert_range(requestedModes.end(), sortedModes | std::views::reverse)/insert(requestedModes.end(), sortedModes.rbegin(), sortedModes.rend())/' src/output/Monitor.cpp
 
     vsed -i 's/std::ranges::starts_with(str_view, prefixes)/std::ranges::equal(str_view | std::views::take(std::string_view(prefixes).size()), std::string_view(prefixes))/g' src/helpers/MiscFunctions.cpp
+
+    vsed -i 's/request\.subview(i, 2)/std::string_view(request).substr(i, 2)/g' src/ipc/s1/S1.cpp
+
+	python3 -c '
+p = "src/keybinds/Key.cpp"
+s = open(p).read()
+needle = "return ev.visit("
+idx = s.index(needle)
+i = idx + len(needle)
+depth = 1
+while depth > 0:
+    if s[i] == "(": depth += 1
+    elif s[i] == ")": depth -= 1
+    i += 1
+body = s[idx + len(needle):i - 1]
+s = s[:idx] + f"return std::visit({body}, ev)" + s[i:]
+open(p, "w").write(s)
+'
 }
 post_install() {
   # license
