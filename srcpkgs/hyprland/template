@@ -39,6 +39,7 @@ makedepends="
   hyprutils
   hyprwire
   libcanberra
+  libcanberra-devel
   libdisplay-info-devel
   libdrm-devel
   libgbm-devel
